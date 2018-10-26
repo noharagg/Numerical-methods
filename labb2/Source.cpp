@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	else {
-		out << "NOT SOLUTION";
+		out << "UNDEFINED";
 	}
 	return 0;
 }
