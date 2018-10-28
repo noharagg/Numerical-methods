@@ -10,11 +10,11 @@ using std::vector;
 // solution: x = 1, y = -2
 
 double f0(vector<double> x) {
-	return 2 * x[0] * x[0]*x[0] - x[1] * x[1]  - 1;
+	return x[0]*x[0] +1;
 }
 
 double f1(vector<double> x) {
-	return x[0] * x[1] * x[1] * x[1]  - x[1] - 4;
+	return x[1]*x[1] + 1;
 }
 
 

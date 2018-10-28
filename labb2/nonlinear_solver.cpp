@@ -10,14 +10,14 @@ double** copy(double** matrix, int n);
 double derivative(func f, std::vector<double> x, int numberCoordinate) {
 	std::vector<double> copyXplus = x;
 	std::vector<double> copyXminus = x;
-	const double e = 1e-7;
+	const double e = 1e-9;
 	copyXplus[numberCoordinate] += e;
 	copyXminus[numberCoordinate] -= e;
 	return ((f(copyXplus) - f(copyXminus)) / (2 * e));
 }
 
 bool nonlinear_solver(std::vector<func> &nonlinear_system, std::vector<double> &initial_approx, int &limited_iteration, double &norm_x) {
-	const double e = 1e-7;
+	const double e = 1e-9;
 	int n = initial_approx.size();
 	int count_iteration = 0;
 	std::vector<double> previos_approx = initial_approx;
@@ -50,7 +50,7 @@ bool nonlinear_solver(std::vector<func> &nonlinear_system, std::vector<double> &
 		norm_x = norm_change(previos_approx,initial_approx);
 		count_iteration++;
 		previos_approx = initial_approx;
-	} while (!(norm_x < e  && norm_vector(nonlinear_system, initial_approx) < e));
+	} while (!(abs(norm_x) < e  && abs(norm_vector(nonlinear_system, initial_approx)) < e));
 	limited_iteration = count_iteration;
 	return 1;
 }
