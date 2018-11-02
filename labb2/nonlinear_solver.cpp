@@ -1,11 +1,13 @@
 #include"nonlinear_solver.h"
-
+#include"nonlinear_system.h"
+#include"sle_solver.h"
+#include"sle_solver.h"
 
 double* copy(double* matrix, int n);
 double* copy(std::vector<double> matrix, int n);
 double** copy(std::vector<std::vector<double>> matrix, int n);
 double** copy(double** matrix, int n);
-
+void garbage_collector(double **matrix, int size);
 
 double derivative(func f, std::vector<double> x, int numberCoordinate) {
 	std::vector<double> copyXplus = x;
@@ -26,9 +28,19 @@ bool nonlinear_solver(std::vector<func> &nonlinear_system, std::vector<double> &
 		partial_matrix[i] = new double[n];
 	}
 	double* b = new double[n];
-	double* solution;
+	double* solution = nullptr;
+	double** copy_matrix = new double*[n];
+	for (int i = 0; i < n; i++) {
+		copy_matrix[i] = new double[n];
+	}
+	double* copy_b = new double[n];
 	do {
 		if (count_iteration == limited_iteration) {
+			garbage_collector(partial_matrix, n);
+			garbage_collector(copy_matrix, n);
+			delete[] copy_b;
+			delete[] b;
+			delete[] solution;
 			return 0;
 		}
 		for (int i = 0; i < n; i++) {
@@ -42,6 +54,11 @@ bool nonlinear_solver(std::vector<func> &nonlinear_system, std::vector<double> &
 		double* copy_b = copy(b, n);
 		solution = method_gaus(n, copy_matrix, copy_b);
 		if (solution == nullptr) {
+			garbage_collector(partial_matrix, n);
+			garbage_collector(copy_matrix, n);
+			delete[] copy_b;
+			delete[] b;
+			delete[] solution;
 			return 0;
 		}
 		for (int i = 0; i < n; i++) {
@@ -52,6 +69,11 @@ bool nonlinear_solver(std::vector<func> &nonlinear_system, std::vector<double> &
 		previos_approx = initial_approx;
 	} while (!(abs(norm_x) < e  && abs(norm_vector(nonlinear_system, initial_approx)) < e));
 	limited_iteration = count_iteration;
+	garbage_collector(partial_matrix, n);
+	garbage_collector(copy_matrix, n);
+	delete[] copy_b;
+	delete[] b;
+	delete[] solution;
 	return 1;
 }
 
@@ -108,4 +130,11 @@ double norm_change(std::vector<double> &previos_approx, std::vector<double> appr
 		}
 	}
 	return max;
+}
+
+void garbage_collector(double **matrix, int size) {
+	for (int i = 0; i < size; i++) {
+		delete[] matrix[i];
+	}
+	delete matrix;
 }

@@ -4,11 +4,14 @@
 #include <numeric>
 #include <chrono>
 #include"nonlinear_solver.h"
+#include"nonlinear_system.h"
 
 int main(int argc, char* argv[]) {
 
 	std::ofstream out("solution.txt");
-
+	if (!out.is_open()) {
+		return 0;
+	}
 	std::vector<func> system_matrix = nonlinear_system();
 	std::vector<double> initial_approximation = get_initial_approximation();
 	

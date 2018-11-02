@@ -1,5 +1,5 @@
-#include <cmath>
 #include "nonlinear_system.h"
+#include <cmath>
 
 typedef double(*func)(std::vector<double>);
 using std::vector;

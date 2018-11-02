@@ -1,4 +1,5 @@
 #include "sle_solver.h"
+#include <cmath>
 
 double sum(double** matrix, double* x, int k, int  n, int l);
 const double eps = 1e-10;
