@@ -1,2 +1,4 @@
 ﻿  Integral.cpp
+d:\repos\numerical-methods\labb5\integral.cpp(9): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+d:\repos\numerical-methods\labb5\integral.cpp(30): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
   labb5.vcxproj -> D:\repos\Numerical-methods\labb5\Debug\labb5.exe

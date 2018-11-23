@@ -1,0 +1,2 @@
+Trap = 0.552314 Count iteration = 11
+Simpson = 0.552314 Count iteration = 5
