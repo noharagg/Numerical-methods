@@ -1,10 +1,10 @@
 #include "Integral.h"
 #include <cmath>
 
-const double e = 1e-7;
 
 
-double methodTrap(double a, double b, double h,func f,int& count) {
+double methodTrap(double a, double b, double e,func f,int& count) {
+	double h = 0.1;
 	double integral = 0, integral_prev = 0, sum = 0;
 	int n = (b - a)/h;
 	do {
@@ -25,7 +25,8 @@ double methodTrap(double a, double b, double h,func f,int& count) {
 }
 
 
-double methodSimpson(double a, double b, double h, func f,int& count) {
+double methodSimpson(double a, double b, double e, func f,int& count) {
+	double h = 0.1;
 	double integral = 0.0, integral_prev = 0.0, sum = 0.0;
 	int n = (b - a) / h;
 	do {
