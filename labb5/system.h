@@ -1,5 +1,3 @@
-typedef double(*func)(double);
 
-double function(double x);
-
-func getFunc();
+double func(double x);
+double func2(double x, double y);
