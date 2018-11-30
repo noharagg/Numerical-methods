@@ -10,6 +10,7 @@ const int m = 1;
 const double c = 3e8;
 
 void convert(double* solution);
+double getDistance(double bias, double habl, double b);
 
 int main() {
 	std::ifstream in("galaxies.csv");
@@ -49,6 +50,8 @@ int main() {
 		out << "a[" << i << "] = " << solution[i] << std::endl;
 	}
 	//out << "b = " << solution[0] << std::endl << "H = " << solution[1] << std::endl;
+	out << " distance for OGC 02716 = " << getDistance(0.00127, solution[1], solution[0]) << std::endl;
+	out << " distance for OGC 9357 = " << getDistance(0.01325, solution[1], solution[0]) << std::endl;
 	out.close();
 	delete[] solution;
 	return 0;
@@ -57,4 +60,9 @@ int main() {
 void convert(double* solution) {
 	solution[1] = pow(solution[1]/c, -1);
 	solution[0] *= -1 * solution[1];
+}
+
+ double getDistance(double bias, double habl, double b) {
+	 double distance = 0;
+	 return (c*bias - b)/habl;
 }
