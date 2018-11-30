@@ -2,50 +2,49 @@
 #include <cmath>
 #include "system.h"
 
-double methodTrap(double a, double b, double e, int& count) {
+double solutionIntegral(method m, function f, double a, double b,double e, int& count, int coef) {
 	double h = 0.1;
-	double integral = 0, integral_prev = 0, sum = 0;
-	int n = (b - a)/h;
-	do {
+	double integral = 0, integral_prev = 0;
+	do{
 		integral_prev = integral;
-		integral = func(a) + func(b);
-		sum = 0;
-		
-		for (int i = 1; i < n; i++) {
-			sum += 2 * func(a + i * h);
-		}
-		integral += sum;
-		integral *= h / 2;
+		integral = m(a,b,h,f);
 		count++;
 		h /= 2;
-		n *= 2;
-	} while (abs(integral_prev - integral) >= 3 * e);
+	} while (abs(integral_prev - integral) >= coef * e);
+	return integral;
+}
+
+double methodTrap(double a, double b,  double h,function f) {
+	double integral = 0, sum = 0;
+	sum = 0;
+	int n = (b - a) / h;
+	integral = func(a) + func(b);
+	for (int i = 1; i < n; i++) {
+		sum += 2 * f(a + i * h);
+	}
+	integral += sum;
+	integral *= h / 2;
+	
 	return integral;
 }
 
 
-double methodSimpson(double a, double b, double e, int& count) {
-	double h = 0.1;
-	double integral = 0.0, integral_prev = 0.0, sum = 0.0;
+double methodSimpson(double a, double b, double h, function f) {
+
+	double integral = 0, sum = 0;
+	sum = 0;
 	int n = (b - a) / h;
-	do {
-		integral_prev = integral;
-		integral = func(a) + func(b);
-		sum = 0;
-		for (int i = 1; i < n; i++) {
-			if (i % 2 != 0) {
-				sum += 4 * func(a + i * h);
-			}
-			else {
-				sum += 2 * func(a + i * h);
-			}
+	integral = func(a) + func(b);
+	for (int i = 1; i < n; i++) {
+		if (i % 2 != 0) {
+			sum += 4 * func(a + i * h);
 		}
-		integral += sum;
-		integral *= h / 3;
-		count++;
-		h /= 2;
-		n *= 2;
-	} while (abs(integral_prev - integral) >= 15 * e);
+		else {
+			sum += 2 * func(a + i * h);
+		}
+	}
+	integral += sum;
+	integral *= h / 3;
 	return integral;
 }
 
