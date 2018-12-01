@@ -1,5 +1,7 @@
 #include <functional>
 typedef std::function<double(double)> function;
+typedef std::function<double(double, double)> functionDual;
+typedef std::function<bool(double , double)> area;
 
 typedef std::function<double(double, double, double ,std::function<double(double)>)> method;
 
@@ -9,4 +11,5 @@ double methodTrap(double a, double b, double h, function f);
 
 double methodSimpson(double a, double b, double h, function);
 
-double cubeSimpson(double a, double a1, double b1, double b);
+double cubeSimpson(double a, double a1, double b1, double b, functionDual, area);
+

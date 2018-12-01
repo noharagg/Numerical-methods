@@ -8,3 +8,7 @@ double func(double x) {
 double func2(double x, double y ) {
 	return sin(x*x + y * y) / (1 + x + y);
 }
+
+double func3(double x, double y) {
+	return	7 - x * x - y * y;
+}
