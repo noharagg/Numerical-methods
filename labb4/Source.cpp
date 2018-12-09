@@ -6,7 +6,6 @@
 #include "mnk.h"
 
 
-const int m = 1;
 const double c = 3e8;
 
 void convert(double* solution);
@@ -22,15 +21,27 @@ int main() {
 		return 0;
 	}
 	int n = 0;
+	int m = 1;
+	int mForDual = 2;
 	std::vector<Galaxy> myVector = readFile(in,n);
 	double* solution = mnk(myVector, n, m);
+	double* solutionDual = mnk(myVector, n, mForDual);
 	if (out.is_open()) {
-			out << "dev = " << deviation(myVector, solution, n, m) << std::endl;
+			out << "dev for m = 1 :  " << deviation(myVector, solution, n, m) << std::endl;
 	}
+
 	convert(solution);
+
 	for (int i = 0; i < m + 1; i++) {
 		out << "a[" << i << "] = " << solution[i] << std::endl;
 	}
+
+	out << "dev for m = 2 :  " << deviation(myVector, solutionDual, n, mForDual) << std::endl;
+
+	for (int i = 0; i < mForDual + 1; i++) {
+		out << "a[" << i << "] = " << solutionDual[i] << std::endl;
+	}
+
 	//out << "b = " << solution[0] << std::endl << "H = " << solution[1] << std::endl;
 	out << " distance for OGC 02716 = " << getDistance(0.00127, solution[1], solution[0]) << std::endl;
 	out << " distance for OGC 9357 = " << getDistance(0.01325, solution[1], solution[0]) << std::endl;
